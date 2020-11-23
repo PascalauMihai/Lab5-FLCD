@@ -25,16 +25,21 @@ class Grammar:
         return currentLine, givenFileReader
 
     def readProductions(self, givenCurrentLine, givenFileReader):
-        lineCount = 0
+
+        existingProductions = {}
         while givenCurrentLine:
             if givenCurrentLine == '\n':
                 return givenCurrentLine, givenFileReader
-            lineCount += 1
 
             productionStart = givenCurrentLine.split("->")[0].strip()
             productionEnd = givenCurrentLine.split("->")[1].strip()
 
-            self.productions[(productionStart, lineCount)] = productionEnd
+            if productionStart not in existingProductions:
+                existingProductions[productionStart] = 1
+
+            self.productions[(productionStart, existingProductions[productionStart])] = productionEnd
+            existingProductions[productionStart] += 1
+
             givenCurrentLine = givenFileReader.readline()
 
         return givenCurrentLine, givenFileReader
@@ -55,31 +60,6 @@ class Grammar:
                 currentReadFunction = switchCase[lineNumber]
                 currentLine, fileReader = currentReadFunction(currentLine, fileReader)
                 lineNumber += 1
-
-    def _validateSequence(self, currentState, givenSequence):
-        if givenSequence == "":
-            if currentState in self.finalStates:
-                return True
-            return False
-
-        currentPoint = (currentState, givenSequence[0])
-        if currentPoint not in self.productions:
-            return False
-
-        if isinstance(self.productions[currentPoint], list):
-            for state in self.productions[currentPoint]:
-                if self._validateSequence(state, givenSequence[1:]):
-                    return True
-            return False
-        else:
-            return self._validateSequence(self.productions[currentPoint], givenSequence[1:])
-
-    def validateSequence(self, givenSequence):
-        for key in self.productions.keys():
-            if isinstance(self.productions[key], list):
-                print("Given FA is not DFA")
-                return "Not DFA"
-        return self._validateSequence(self.initialState, givenSequence)
 
     def printInitialNonTerminal(self):
         print("Initial non terminal: " + self.initialNonTerminal)
@@ -123,7 +103,8 @@ class Grammar:
         inputNonTerminal = input("Enter one non terminal:")
         self.printNonTerminal(inputNonTerminal)
 
-grammar = Grammar("g1.txt")
+
+grammar = Grammar("g2.txt")
 
 grammar.printAll()
 

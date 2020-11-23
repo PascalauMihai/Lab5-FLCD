@@ -1,0 +1,144 @@
+program
+program listOfParameters compoundStatement simpleType userDefinedType constInteger type oneParameter identifier statementList statement simpleStatement structStatement assignStatement IOStatement declarationStatement expression readStatement writeStatement constString simpleExpression sumExpression substractExpression divideExpression multiplyExpression moduloExpression ifStatement whileStatement condition RELATION noZeroDigit digit character anyChar str letter leterOrDigit output andOrRelation sign letterOrDigit
+integer mainFunction ( ) writeToKeyboard readFromKeyboard char string space [ ] ' " , . { } return ; = >> << + - / * % if else while :&: :|: :<: :<=: :==: :!=: :>=: :>: 0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+program -> integer mainFunction ( [ listOfParameters ] ) compoundStatement
+simpleType -> integer
+simpleType -> char
+simpleType -> string
+userDefinedType -> simpleType [ constInteger ]
+type -> simpleType
+type -> userDefinedType
+oneParameter -> type space identifier
+listOfParameters -> oneParameter
+listOfParameters -> listOfParameters , oneParameter
+compoundStatement -> { statementList [ return 0 ; ] }
+statementList -> statement
+statementList -> statement statementList
+statement -> simpleStatement
+statement -> structStatement
+simpleStatement -> IOStatement
+simpleStatement -> assignStatement
+simpleStatement -> declarationStatement
+assignStatement -> identifier = expression ;
+IOStatement -> readStatement
+IOStatement -> writeStatement
+readStatement -> readFromKeyboard { >> identifer } ;
+writeStatement -> writeToKeyboard { << ( output ) } ;
+output -> identifier
+output -> constString
+declarationStatement -> oneParameter ;
+declarationStatement -> oneParameter = simpleExpression ;
+expression -> simpleExpression
+expression -> sumExpression
+expression -> substractExpression
+expression -> divideExpression
+expression -> multiplyExpression
+expression -> moduloExpression
+simpleExpression -> constInteger
+simpleExpression -> identifier
+sumExpression -> simpleExpression + simpleExpression
+substractExpression -> simpleExpression - simpleExpression
+divideExpression -> simpleExpression / simpleExpression
+multiplyExpression -> simpleExpression * simpleExpression
+moduloExpression -> simpleExpression % simpleExpression
+structStatement -> compoundStatement
+structStatement -> ifStatement
+structStatement -> whileStatement
+ifStatement -> if ( condition ) compoundStatement [ else compoundStatement ]
+whileStatement -> while ( condition ) compoundStatement
+condition -> expression RELATION expression [ ( andOrRelation ) expression RELATION expression ]
+andOrRelation -> :&:
+andOrRelation -> :|:
+RELATION -> :<:
+RELATION -> :<=:
+RELATION -> :==:
+RELATION -> :!=:
+RELATION -> :>=:
+RELATION -> :>:
+constInteger -> 0
+constInteger -> [ sign ] noZeroDigit { digit }
+sign -> +
+sign -> -
+noZeroDigit -> 1
+noZeroDigit -> 2
+noZeroDigit -> 3
+noZeroDigit -> 4
+noZeroDigit -> 5
+noZeroDigit -> 6
+noZeroDigit -> 7
+noZeroDigit -> 8
+noZeroDigit -> 9
+digit -> 0
+digit -> 1
+digit -> 2
+digit -> 3
+digit -> 4
+digit -> 5
+digit -> 6
+digit -> 7
+digit -> 8
+digit -> 9
+identifier -> letter { letterOrDigit }
+letterOrDigit -> letter
+letterOrDigit -> digit
+letter -> A
+letter -> B
+letter -> C
+letter -> D
+letter -> E
+letter -> F
+letter -> G
+letter -> H
+letter -> I
+letter -> J
+letter -> K
+letter -> L
+letter -> M
+letter -> N
+letter -> O
+letter -> P
+letter -> Q
+letter -> R
+letter -> S
+letter -> T
+letter -> U
+letter -> V
+letter -> W
+letter -> X
+letter -> Y
+letter -> Z
+letter -> a
+letter -> b
+letter -> c
+letter -> d
+letter -> e
+letter -> f
+letter -> g
+letter -> h
+letter -> i
+letter -> j
+letter -> k
+letter -> l
+letter -> m
+letter -> n
+letter -> o
+letter -> p
+letter -> q
+letter -> r
+letter -> s
+letter -> t
+letter -> u
+letter -> v
+letter -> w
+letter -> x
+letter -> y
+letter -> z
+anyChar -> letter
+anyChar -> digit
+anyChar -> space
+anyChar -> .
+anyChar -> ,
+anyChar -> /
+character -> ' anyChar '
+constString -> " str "
+str -> { anyChar }
