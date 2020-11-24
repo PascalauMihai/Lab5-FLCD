@@ -40,3 +40,9 @@ class Parser:
     def success(self):
         self.currentState = 'f'
         self.index += 1
+
+    def runAlgorithm(self):
+        #print(self.currentState)
+        while self.currentState != "f" and self.currentState != "e":
+            if self.currentState == "q":
+                if self.inputStack.count() == 0 and self.index == self.grammar

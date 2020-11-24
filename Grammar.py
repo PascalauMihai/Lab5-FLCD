@@ -104,8 +104,3 @@ class Grammar:
         self.printNonTerminal(inputNonTerminal)
 
 
-grammar = Grammar("g2.txt")
-
-grammar.printAll()
-
-grammar.printOneNonTerminal()
