@@ -46,7 +46,7 @@ class Grammar:
                 return givenCurrentLine, givenFileReader
 
             productionStart = givenCurrentLine.split("->")[0].strip()
-            productionEnd = list(givenCurrentLine.split("->")[1].strip())
+            productionEnd = list(givenCurrentLine.split("->")[1].strip().split(" "))
 
             if productionStart not in existingProductions:
                 existingProductions[productionStart] = 1

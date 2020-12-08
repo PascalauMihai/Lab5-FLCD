@@ -1,21 +1,22 @@
 from Grammar import Grammar
-
+from ParserOutput import ParserOutput
 
 class Parser:
-    def __init__(self):
+    def __init__(self, grammarFileName):
         self.currentState = 'q'
         self.index = 0
         self.workingStack = []
-        self.grammar = Grammar("g1.txt")
+        self.grammar = Grammar(grammarFileName)
+        self.parserOutput = ParserOutput()
         self.debug = True
-        self.inputStack = [(self.grammar.getInitialNonTerminal(), 1)]
+        self.inputStack = []
 
-    def printParserStep(self):
-        print("~~~~~~~~~~~~")
-        print(self.currentState)
-        print(self.index)
-        print("working stack: " + str(self.workingStack))
-        print("input stack: " + str(self.inputStack))
+    def printAll(self):
+        print("-----------------------------------------------------------------------------------")
+        print("Current state: " + self.currentState)
+        print("Current index: " + str(self.index))
+        print("Working stack: " + str(self.workingStack))
+        print("Input stack: " + str(self.inputStack))
 
     def expand(self):
         if isinstance(self.inputStack[0], tuple):
@@ -30,8 +31,6 @@ class Parser:
         self.workingStack.append(nonterminal)
         newProduct = self.grammar.getProductions()[nonterminal]
         self.inputStack.insert(0, newProduct)
-        if self.debug:
-            self.printParserStep()
 
     def advance(self):
         self.index += 1
@@ -44,25 +43,20 @@ class Parser:
         else:
             terminal = self.inputStack.pop(0)
 
+      #  if terminal == 'epsilon':
+      #      self.workingStack.pop()
+      #  else:
         self.workingStack.append(terminal)
-        if self.debug:
-            self.printParserStep()
 
     def momentaryInsucces(self):
         self.currentState = 'b'
-        if self.debug:
-            self.printParserStep()
 
     def back(self):
         self.index -= 1
         lastFromWorkingStack = [self.workingStack.pop()]
         self.inputStack.insert(0, lastFromWorkingStack)
-        if self.debug:
-            self.printParserStep()
 
     def anotherTry(self):
-        if self.debug:
-            self.printParserStep()
         lastFromWorkingStack = self.workingStack.pop()
         checkIfNextExists = (lastFromWorkingStack[0], lastFromWorkingStack[1] + 1)
         if checkIfNextExists in self.grammar.getProductions():
@@ -96,25 +90,33 @@ class Parser:
     def success(self):
         self.currentState = 'f'
         self.index += 1
-        if self.debug:
-            self.printParserStep()
 
-    def checkWordLenght(self, w):
-        if len(w) > self.index: return self.inputStack[0][0] == w[self.index]
+    def checkWordLength(self, w):
+        if len(w) > self.index:
+            if self.inputStack[0][0] == 'epsilon':
+                return True
+            return self.inputStack[0][0] == w[self.index]
         return False
 
     def runAlgorithm(self, w):
-        if self.debug:
-            self.printParserStep()
+        self.currentState = 'q'
+        self.index = 0
+        self.workingStack = []
+        self.debug = True
+        self.inputStack = [(self.grammar.getInitialNonTerminal(), 1)]
 
         while self.currentState != "f" and self.currentState != "e":
+            if self.debug:
+                self.printAll()
+
             if self.currentState == "q":
                 if len(self.inputStack) == 0 and self.index == len(w):
                     self.currentState = "f"
                 else:
-                    if self.inputStack[0][0] in self.grammar.getNonTerminals():
+                    if len(self.inputStack) > 0 and self.inputStack[0][0] in self.grammar.getNonTerminals():
                         self.expand()
-                    elif self.inputStack[0][0] in self.grammar.getTerminals() and self.checkWordLenght(w):
+                    elif len(self.inputStack) > 0 and self.inputStack[0][0] in self.grammar.getTerminals() \
+                            and self.checkWordLength(w):
                         self.advance()
                     else:
                         self.momentaryInsucces()
@@ -123,15 +125,42 @@ class Parser:
                     self.back()
                 else:
                     self.anotherTry()
-                    if self.debug:
-                        self.printParserStep()
         if self.currentState == "e":
-            print("!!!!!!!!!!!!! EROARE !!!!!!!!!!!!!")
+            print("Error")
         else:
-            print("WE GOOOOOOOOOOOOOOOOOOOOOOO")
+            print("Finished")
             print(self.workingStack)
+            self.parserOutput.setParserResult(self.workingStack)
+            self.parserOutput.calculateProductionString()
+            self.parserOutput.printProductionString()
 
 
-parser = Parser()
+def generateInputFromPIF(givenFileName):
+    output = []
+    with open(givenFileName, 'r') as filePath:
+        currentLine = filePath.readline()
+        while currentLine:
+            element = currentLine.split(" ")[0]
+            index = 0
+            while index < len(element) and element[index] != '\'':
+                index += 1
 
-parser.runAlgorithm(['a','a','c','b','c'])
+            element = element[index+1:]
+            index = len(element) - 1
+            while index >= 0 and element[index] != '\'':
+                index -= 1
+            element = element[:index]
+            output.append(element)
+            currentLine = filePath.readline()
+
+    print(output)
+    return output
+
+parser = Parser("g1.txt")
+
+#generateInputFromPIF("lab3/PIF.out")
+
+parser.runAlgorithm(['a','a','c','b','c','a'])
+#parser.runAlgorithm(["integer", "mainFunction", "(",  "epsilon", ")", "{", "epsilon", "epsilon", "}"])
+
+#parser.runAlgorithm(generateInputFromPIF("lab3/PIF.out"))

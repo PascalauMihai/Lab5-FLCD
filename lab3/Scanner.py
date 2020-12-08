@@ -238,8 +238,8 @@ class Scanner:
 
 
 def run():
-    scanner = Scanner("lab3/program.txt", "lab3/token.in")
+    scanner = Scanner("program.txt", "token.in")
     scanner.scanProgram()
 
 
-run()
+#run()

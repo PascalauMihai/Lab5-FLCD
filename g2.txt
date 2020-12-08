@@ -1,19 +1,24 @@
 program
-program listOfParameters compoundStatement simpleType userDefinedType constInteger type oneParameter identifier statementList statement simpleStatement structStatement assignStatement IOStatement declarationStatement expression readStatement writeStatement constString simpleExpression sumExpression substractExpression divideExpression multiplyExpression moduloExpression ifStatement whileStatement condition RELATION noZeroDigit digit character anyChar str letter leterOrDigit output andOrRelation sign letterOrDigit
-integer mainFunction ( ) writeToKeyboard readFromKeyboard char string space [ ] ' " , . { } return ; = >> << + - / * % if else while :&: :|: :<: :<=: :==: :!=: :>=: :>: 0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-program -> integer mainFunction ( [ listOfParameters ] ) compoundStatement
+program listOfParameters compoundStatement writeOutputRepeat readOutputRepeat statementListRepeat readInput simpleType writeOutput userDefinedType returnStatement type oneParameter andOrExpression statementList statement simpleStatement structStatement assignStatement IOStatement declarationStatement expression readStatement writeStatement simpleExpression sumExpression substractExpression divideExpression multiplyExpression moduloExpression ifStatement whileStatement condition RELATION output
+integer mainFunction ( ) writeToKeyboard readFromKeyboard char  string [ ] ' " , . { } epsilon return ; = >> << + - / * % if else while :&: :|: :<: :<=: :==: :!=: :>=: :>: identifier constant
+program -> integer mainFunction ( listOfParameters ) compoundStatement
 simpleType -> integer
 simpleType -> char
 simpleType -> string
-userDefinedType -> simpleType [ constInteger ]
+userDefinedType -> simpleType [ constant ]
 type -> simpleType
 type -> userDefinedType
-oneParameter -> type space identifier
+oneParameter -> type identifier
 listOfParameters -> oneParameter
-listOfParameters -> listOfParameters , oneParameter
-compoundStatement -> { statementList [ return 0 ; ] }
+listOfParameters -> epsilon
+compoundStatement -> { statementList returnStatement }
+returnStatement -> epsilon
+returnStatement -> return constant ;
 statementList -> statement
-statementList -> statement statementList
+statementList -> statement statementListRepeat
+statementList -> epsilon
+statementListRepeat -> statementList
+statementListRepeat -> epsilon
 statement -> simpleStatement
 statement -> structStatement
 simpleStatement -> IOStatement
@@ -22,10 +27,18 @@ simpleStatement -> declarationStatement
 assignStatement -> identifier = expression ;
 IOStatement -> readStatement
 IOStatement -> writeStatement
-readStatement -> readFromKeyboard { >> identifer } ;
-writeStatement -> writeToKeyboard { << ( output ) } ;
+readStatement -> readFromKeyboard readInput ;
+writeStatement -> writeToKeyboard writeOutput ;
+readInput -> >> identifier
+readInput -> >> identifier readInputRepeat
+readInputRepeat -> epsilon
+readInputRepeat -> readInput
+writeOutput -> << output
+writeOutput -> << output writeOutputRepeat
+writeOutputRepeat -> epsilon
+writeOutputRepeat -> writeOutput
 output -> identifier
-output -> constString
+output -> constant
 declarationStatement -> oneParameter ;
 declarationStatement -> oneParameter = simpleExpression ;
 expression -> simpleExpression
@@ -34,7 +47,8 @@ expression -> substractExpression
 expression -> divideExpression
 expression -> multiplyExpression
 expression -> moduloExpression
-simpleExpression -> constInteger
+simpleExpression -> epsilon
+simpleExpression -> constant
 simpleExpression -> identifier
 sumExpression -> simpleExpression + simpleExpression
 substractExpression -> simpleExpression - simpleExpression
@@ -44,9 +58,13 @@ moduloExpression -> simpleExpression % simpleExpression
 structStatement -> compoundStatement
 structStatement -> ifStatement
 structStatement -> whileStatement
-ifStatement -> if ( condition ) compoundStatement [ else compoundStatement ]
+ifStatement -> if ( condition ) compoundStatement elseStatement
+elseStatement -> else compoundStatement
+else -> epsilon
 whileStatement -> while ( condition ) compoundStatement
-condition -> expression RELATION expression [ ( andOrRelation ) expression RELATION expression ]
+condition -> expression RELATION expression andOrExpression
+andOrExpression -> epsilon
+andOrExpression -> ( andOrRelation ) expression RELATION expression
 andOrRelation -> :&:
 andOrRelation -> :|:
 RELATION -> :<:
@@ -55,22 +73,3 @@ RELATION -> :==:
 RELATION -> :!=:
 RELATION -> :>=:
 RELATION -> :>:
-constInteger -> 0
-constInteger -> [ sign ] noZeroDigit { digit }
-sign -> +
-sign -> -
-noZeroDigit -> 0
-digit -> 0
-identifier -> letter { letterOrDigit }
-letterOrDigit -> letter
-letterOrDigit -> digit
-letter -> 0
-anyChar -> letter
-anyChar -> digit
-anyChar -> space
-anyChar -> .
-anyChar -> ,
-anyChar -> /
-character -> ' anyChar '
-constString -> " str "
-str -> { anyChar }
