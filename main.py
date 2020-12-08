@@ -6,7 +6,6 @@ grammar = Grammar("g2.txt")
 grammar.printAll()
 
 #grammar.printOneNonTerminal()
-
 parser = Parser()
 
-parser.runAlgorithm()
+parser.runAlgorithm(['a','a','c','b','c'])

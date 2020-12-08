@@ -1,5 +1,4 @@
-from HashTable import HashTable
-
+from lab3.HashTable import HashTable
 
 def isSymbol(givenCharacter):
     if givenCharacter in "[]{}()!=*/\\;,<.>&|%":
@@ -15,6 +14,9 @@ class Scanner:
         self.readAndCreateTokensList()
         self.__PIF = []
         self.__symbolTable = HashTable(100)
+
+    def getPIF(self):
+        return self.__PIF
 
     def readAndCreateTokensList(self):
         with open(self.__tokensFileName, 'r') as filePath:
@@ -236,7 +238,7 @@ class Scanner:
 
 
 def run():
-    scanner = Scanner("program.txt", "token.in")
+    scanner = Scanner("lab3/program.txt", "lab3/token.in")
     scanner.scanProgram()
 
 

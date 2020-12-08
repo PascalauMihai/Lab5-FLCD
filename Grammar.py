@@ -1,26 +1,40 @@
+import copy
+
 class Grammar:
     def __init__(self, givenFileName):
         self.fileName = givenFileName
-        self.nonterminals = []
-        self.terminals = []
-        self.initialNonTerminal = ""
-        self.productions = {}
+        self.__nonterminals = []
+        self.__terminals = []
+        self.__initialNonTerminal = ""
+        self.__productions = {}
         self.readInputFromFile()
 
+    def getNonTerminals(self):
+        return self.__nonterminals
+
+    def getProductions(self):
+        return copy.deepcopy(self.__productions)
+
+    def getTerminals(self):
+        return self.__terminals
+
+    def getInitialNonTerminal(self):
+        return self.__initialNonTerminal
+
     def readInitialNonTerminal(self, givenCurrentLine, givenFileReader):
-        self.initialNonTerminal = givenCurrentLine[0:-1]
+        self.__initialNonTerminal = givenCurrentLine[0:-1]
         currentLine = givenFileReader.readline()
         return currentLine, givenFileReader
 
     def readTerminals(self, givenCurrentLine, givenFileReader):
-        self.terminals = givenCurrentLine.split(" ")
-        self.terminals[-1] = self.terminals[-1][0:-1]
+        self.__terminals = givenCurrentLine.split(" ")
+        self.__terminals[-1] = self.__terminals[-1][0:-1]
         currentLine = givenFileReader.readline()
         return currentLine, givenFileReader
 
     def readNonTerminals(self, givenCurrentLine, givenFileReader):
-        self.nonterminals = givenCurrentLine.split(" ")
-        self.nonterminals[-1] = self.nonterminals[-1][0:-1]
+        self.__nonterminals = givenCurrentLine.split(" ")
+        self.__nonterminals[-1] = self.__nonterminals[-1][0:-1]
         currentLine = givenFileReader.readline()
         return currentLine, givenFileReader
 
@@ -32,12 +46,12 @@ class Grammar:
                 return givenCurrentLine, givenFileReader
 
             productionStart = givenCurrentLine.split("->")[0].strip()
-            productionEnd = givenCurrentLine.split("->")[1].strip()
+            productionEnd = list(givenCurrentLine.split("->")[1].strip())
 
             if productionStart not in existingProductions:
                 existingProductions[productionStart] = 1
 
-            self.productions[(productionStart, existingProductions[productionStart])] = productionEnd
+            self.__productions[(productionStart, existingProductions[productionStart])] = productionEnd
             existingProductions[productionStart] += 1
 
             givenCurrentLine = givenFileReader.readline()
@@ -62,35 +76,35 @@ class Grammar:
                 lineNumber += 1
 
     def printInitialNonTerminal(self):
-        print("Initial non terminal: " + self.initialNonTerminal)
+        print("Initial non terminal: " + self.__initialNonTerminal)
 
     def printAllNonTerminals(self):
         print("Nonterminals: ", end="")
-        for nonTerminal in self.nonterminals:
+        for nonTerminal in self.__nonterminals:
             print(nonTerminal + " ", end="")
         print()
 
     def printNonTerminal(self, givenTerminal):
         print("Nonterminal " + str(givenTerminal) + ":")
 
-        for currentProduction in self.productions:
+        for currentProduction in self.__productions:
             if currentProduction[0] == givenTerminal:
                 print(currentProduction[0] + str(currentProduction[1]) + " -> " +
-                      self.productions[currentProduction])
+                      self.__productions[currentProduction])
 
         print()
 
     def printTerminals(self):
         print("Terminals: ", end="")
-        for terminal in self.terminals:
+        for terminal in self.__terminals:
             print(terminal + " ", end="")
         print()
 
     def printProductions(self):
         print("Productions:")
-        for currentProduction in self.productions:
+        for currentProduction in self.__productions:
             print(currentProduction[0] + str(currentProduction[1]) + " -> " +
-                  self.productions[currentProduction])
+                  str(self.__productions[currentProduction]))
         print()
 
     def printAll(self):
@@ -104,3 +118,9 @@ class Grammar:
         self.printNonTerminal(inputNonTerminal)
 
 
+
+#grammar = Grammar("g1.txt")
+
+#grammar.printAll()
+#print(grammar.productions)
+#grammar.printOneNonTerminal()
