@@ -1,19 +1,7 @@
 integer mainFunction()
 {
-	if (firstNumber :<: secondNumber :&: firstNumber :<: thirdNumber)
-	{
-		minimum = firstNumber;
-	}
-	else
-	{
-		if(secondNumber :<: thirdNumber)
-		{
-			minimum = secondNumber;
-		}
-		else
-		{
-			minimum = thirdNumber;
-		}
-	}
+	integer number;
+	integer secondNumber;
+	number = 5;
 	return 0;
 }

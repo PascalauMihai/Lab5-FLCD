@@ -1,5 +1,5 @@
 program
-program listOfParameters compoundStatement writeOutputRepeat readInputRepeat statementListRepeat readInput simpleType writeOutput userDefinedType returnStatement type oneParameter andOrExpression statementList statement simpleStatement structStatement assignStatement IOStatement declarationStatement expression readStatement writeStatement simpleExpression sumExpression substractExpression divideExpression multiplyExpression moduloExpression ifStatement elseStatement whileStatement condition RELATION output andOrRelation
+program listOfParameters compoundStatement compoundStatementIntern statementListIntern writeOutputRepeat readInputRepeat statementListRepeat readInput simpleType writeOutput userDefinedType returnStatement type oneParameter andOrExpression statementList statement simpleStatement structStatement assignStatement IOStatement declarationStatement expression readStatement writeStatement simpleExpression sumExpression substractExpression divideExpression multiplyExpression moduloExpression ifStatement elseStatement whileStatement condition RELATION output andOrRelation
 integer mainFunction ( ) writeToKeyboard readFromKeyboard char  string [ ] ' " , . { } epsilon return ; = >> << + - / * % if else while :&: :|: :<: :<=: :==: :!=: :>=: :>: identifier constant
 program -> integer mainFunction ( listOfParameters ) compoundStatement
 simpleType -> integer
@@ -56,7 +56,11 @@ substractExpression -> simpleExpression - simpleExpression
 divideExpression -> simpleExpression / simpleExpression
 multiplyExpression -> simpleExpression * simpleExpression
 moduloExpression -> simpleExpression % simpleExpression
-structStatement -> compoundStatement
+structStatement -> compoundStatementIntern
+compoundStatementIntern -> { statementListIntern }
+statementListIntern -> statement statementRepeat
+statementListIntern -> statement
+statementListIntern -> epsilon
 structStatement -> ifStatement
 structStatement -> whileStatement
 ifStatement -> if ( condition ) compoundStatement elseStatement

@@ -9,7 +9,7 @@ class Parser:
         self.index = 0
         self.workingStack = []
         self.grammar = Grammar(grammarFileName)
-        self.parserOutput = ParserOutput(givenParserOutputName)
+        self.parserOutput = ParserOutput(givenParserOutputName, self.grammar)
         self.debug = True
         self.inputStack = []
         self.epsilonCount = 0
