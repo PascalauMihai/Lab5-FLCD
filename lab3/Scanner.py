@@ -82,7 +82,7 @@ class Scanner:
 
                     if self.__symbolTable.find(currentElement) == -1:
                         self.__symbolTable.add(currentElement)
-                        self.__PIF.append(["constant", self.__symbolTable.find(currentElement)])
+                    self.__PIF.append(["constant", self.__symbolTable.find(currentElement)])
 
                 elif currentLine[index] == '"':
                     currentElement += currentLine[index]
@@ -242,4 +242,4 @@ def run():
     scanner.scanProgram()
 
 
-#run()
+run()

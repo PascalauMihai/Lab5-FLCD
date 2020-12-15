@@ -1,12 +1,13 @@
-Integer mainFunction()
+integer mainFunction()
 {
-	Integer firstNumber;
-	Integer secondNumber, thirdNumber;
-	Integer minimum = 0;
+	integer firstNumber;
+	integer secondNumber;
+	integer thirdNumber;
+	integer minimum = 0;
 	
 	readFromKeyboard >> firstNumber >> secondNumber >> thirdNumber;
 	
-	if (firstNumber :<: secondNumber :&&: firstNumber :<: thirdNumber)
+	if (firstNumber :<: secondNumber :&: firstNumber :<: thirdNumber)
 	{
 		minimum = firstNumber;
 	}
