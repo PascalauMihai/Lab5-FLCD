@@ -4,7 +4,7 @@ integer mainFunction()
 	{
 		minimum = firstNumber;
 	}
-	else 
+	else
 	{
 		if(secondNumber :<: thirdNumber)
 		{

@@ -11,6 +11,11 @@ class ParserOutput:
     def setDerivationStringResult(self, givenDerivationStringResult):
         self.derivationString = givenDerivationStringResult
 
+    def setResultAndCalculateProductionString(self, givenResult, givenDerivationsString):
+        self.setParserResult(givenResult)
+        self.setDerivationStringResult(givenDerivationsString)
+        self.calculateProductionString()
+
     def calculateProductionString(self):
         for element in self.__output:
             if isinstance(element, tuple):
@@ -19,13 +24,13 @@ class ParserOutput:
     def printProductionString(self):
         print("Production string: " + self.productionString)
 
-
     def printDerivationString(self):
         print("Derivation string: " + self.derivationString)
 
-
-    def writeRepresentationsToFile(self):
+    def writeRepresentationsToFile(self, code):
         with open(self.fileName, 'w') as filePath:
+            if code == "error":
+                filePath.write("Error, not finished representations!!!!!!\n")
             filePath.write(
                 "Production string: " + self.productionString + "\n")
             filePath.write("Derivation string: " + self.derivationString + "\n")

@@ -236,10 +236,3 @@ class Scanner:
                 "Symbol Table created using a Hash Map, collision resolution similar to coalesced chaining\n")
             filePath.write(self.__symbolTable.printString())
 
-
-def run():
-    scanner = Scanner("program.txt", "token.in")
-    scanner.scanProgram()
-
-
-run()

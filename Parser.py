@@ -1,5 +1,6 @@
 from Grammar import Grammar
 from ParserOutput import ParserOutput
+from lab3.Scanner import Scanner
 
 
 class Parser:
@@ -138,6 +139,7 @@ class Parser:
                 self.printAll()
 
             self.addOneStepDerivationString()
+
             if self.currentState == "q":
                 if len(self.inputStack) == 0 and self.index - self.epsilonCount == len(w):
                     self.derivationsString += "|- succ"
@@ -164,16 +166,11 @@ class Parser:
         self.addOneStepDerivationString()
         if self.currentState == "e":
             print("Error")
-            self.parserOutput.setDerivationStringResult(self.derivationsString)
-            self.parserOutput.printDerivationString()
+            self.parserOutput.writeRepresentationsToFile("error")
         else:
             print("Finished")
-            self.parserOutput.setParserResult(self.workingStack)
-            self.parserOutput.setDerivationStringResult(self.derivationsString)
-            self.parserOutput.calculateProductionString()
-            self.parserOutput.printProductionString()
-            self.parserOutput.printDerivationString()
-            self.parserOutput.writeRepresentationsToFile()
+            self.parserOutput.setResultAndCalculateProductionString(self.workingStack, self.derivationsString)
+            self.parserOutput.writeRepresentationsToFile("success")
 
 
 def generateInputFromPIF(givenFileName):
@@ -198,12 +195,31 @@ def generateInputFromPIF(givenFileName):
     return output
 
 
-parser = Parser("g2.txt", "out2.txt")
+def runG1(word):
+    parser = Parser("g1.txt", "out1.txt")
+    parser.runAlgorithm(word)
 
-# generateInputFromPIF("lab3/PIF.out")
 
-parser.runAlgorithm(['a', 'a', 'c', 'b', 'c'])
-# parser.runAlgorithm(["integer", "mainFunction", "(",  "integer", "identifier", ")", "{", "readFromKeyboard", ">>", "identifier", ";", "return", "constant", ";", "}"])
-# parser.runAlgorithm(["integer", "mainFunction", "(", ")", "{","readFromKeyboard", ">>","identifier", ">>", "identifier",
-# ">>", "identifier", ";", "}"])
-parser.runAlgorithm(generateInputFromPIF("lab3/PIF.out"))
+def runG2():
+    parser = Parser("g2.txt", "out2.txt")
+    parser.runAlgorithm(generateInputFromPIF("PIF.out"))
+
+
+def runScanner():
+    scanner = Scanner("lab3/program.txt", "lab3/token.in")
+    scanner.scanProgram()
+
+def runParser():
+    runScanner()
+    data = input("1.G1\n2.G2\nEnter your choice: ")
+    if data == "1":
+        word = input("Enter word to verify for G1 or enter 1 for word aacbc: ")
+        if word == "1":
+            runG1(['a', 'a', 'c', 'b', 'c'])
+        else:
+            runG1(list(word))
+    elif data == "2":
+        runG2()
+
+
+runParser()
