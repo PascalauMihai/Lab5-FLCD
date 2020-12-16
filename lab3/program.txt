@@ -1,0 +1,7 @@
+integer mainFunction()
+{
+	integer number;
+	integer secondNumber;
+	number = 5;
+	return 0;
+}

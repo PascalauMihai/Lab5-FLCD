@@ -1,0 +1,29 @@
+integer mainFunction()
+{
+	integer firstNumber;
+	integer secondNumber
+	integer thirdNumber;
+	integer minimum = 0;
+	
+	readFromKeyboard >> firstNumber >> secondNumber >> thirdNumber;
+	
+	if (firstNumber ș secondNumber :&: firstNumber :<: thirdNumber) ~ error: ș operator doesn't exist
+	{
+		minimum = firstNumber;
+	}
+	else 
+	{
+		if(secondNumber :<: thirdNumber) 
+		{
+			minimum = secondNumber;
+		}
+		else
+		{
+			minimum = thirdNumber;
+		}
+	}
+	
+	writeToKeyboard << "Minimum:  << minimum; ~ error: " not closed
+	
+	return 0;
+}

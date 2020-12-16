@@ -1,0 +1,5 @@
+Symbol Table created using a Hash Map, collision resolution similar to coalesced chaining
+Position: 0 Value: 5 NextNodePosition: -1
+Position: 61 Value: 0 NextNodePosition: -1
+Position: 62 Value: number NextNodePosition: -1
+Position: 66 Value: secondNumber NextNodePosition: 0

@@ -1,0 +1,80 @@
+program
+program listOfParameters compoundStatement compoundStatementIntern statementListIntern writeOutputRepeat readInputRepeat statementListRepeat readInput simpleType writeOutput userDefinedType returnStatement type oneParameter andOrExpression statementList statement simpleStatement structStatement assignStatement IOStatement declarationStatement expression readStatement writeStatement simpleExpression sumExpression substractExpression divideExpression multiplyExpression moduloExpression ifStatement elseStatement whileStatement condition RELATION output andOrRelation
+integer mainFunction ( ) writeToKeyboard readFromKeyboard char  string [ ] ' " , . { } epsilon return ; = >> << + - / * % if else while :&: :|: :<: :<=: :==: :!=: :>=: :>: identifier constant
+program -> integer mainFunction ( listOfParameters ) compoundStatement
+simpleType -> integer
+simpleType -> char
+simpleType -> string
+userDefinedType -> simpleType [ constant ]
+type -> simpleType
+type -> userDefinedType
+oneParameter -> type identifier
+listOfParameters -> oneParameter
+listOfParameters -> epsilon
+compoundStatement -> epsilon
+compoundStatement -> { statementList returnStatement }
+returnStatement -> epsilon
+returnStatement -> return constant ;
+statementList -> statement
+statementList -> statement statementListRepeat
+statementList -> epsilon
+statementListRepeat -> statementList
+statementListRepeat -> epsilon
+statement -> simpleStatement
+statement -> structStatement
+simpleStatement -> IOStatement
+simpleStatement -> assignStatement
+simpleStatement -> declarationStatement
+assignStatement -> identifier = expression ;
+IOStatement -> readStatement
+IOStatement -> writeStatement
+readStatement -> readFromKeyboard readInput ;
+writeStatement -> writeToKeyboard writeOutput ;
+readInput -> >> identifier
+readInput -> >> identifier readInputRepeat
+readInputRepeat -> epsilon
+readInputRepeat -> readInput
+writeOutput -> << output
+writeOutput -> << output writeOutputRepeat
+writeOutputRepeat -> epsilon
+writeOutputRepeat -> writeOutput
+output -> identifier
+output -> constant
+declarationStatement -> oneParameter ;
+declarationStatement -> oneParameter = simpleExpression ;
+expression -> simpleExpression
+expression -> sumExpression
+expression -> substractExpression
+expression -> divideExpression
+expression -> multiplyExpression
+expression -> moduloExpression
+simpleExpression -> epsilon
+simpleExpression -> constant
+simpleExpression -> identifier
+sumExpression -> simpleExpression + simpleExpression
+substractExpression -> simpleExpression - simpleExpression
+divideExpression -> simpleExpression / simpleExpression
+multiplyExpression -> simpleExpression * simpleExpression
+moduloExpression -> simpleExpression % simpleExpression
+structStatement -> compoundStatementIntern
+compoundStatementIntern -> { statementListIntern }
+statementListIntern -> statement statementRepeat
+statementListIntern -> statement
+statementListIntern -> epsilon
+structStatement -> ifStatement
+structStatement -> whileStatement
+ifStatement -> if ( condition ) compoundStatement elseStatement
+elseStatement -> else compoundStatement
+else -> epsilon
+whileStatement -> while ( condition ) compoundStatement
+condition -> expression RELATION expression andOrExpression
+andOrExpression -> epsilon
+andOrExpression -> andOrRelation expression RELATION expression
+andOrRelation -> :&:
+andOrRelation -> :|:
+RELATION -> :<:
+RELATION -> :<=:
+RELATION -> :==:
+RELATION -> :!=:
+RELATION -> :>=:
+RELATION -> :>:
